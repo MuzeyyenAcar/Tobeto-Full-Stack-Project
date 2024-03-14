@@ -40,23 +40,19 @@ public class EmployeeController {
 	public AddResponseDTO AddResponseEmployeeDTO(@RequestBody EmployeeDTO dto) {
 		Employee employee = requestMapper.map(dto, Employee.class);
 		employeeService.createEmployee(employee);
-		System.out.println("Personel eklendi");
 		return new AddResponseDTO(employee.getId());
 	}
 
 	@GetMapping("/get")
 	public GetResponseDTO getEmployee(@RequestBody GetRequestDTO dto) {
 		Employee employee = employeeService.readEmployee(dto.getEmail());
-		System.out.println("Get.. Calisiyor");
 		return new GetResponseDTO(employee.getId(), employee.getName(), employee.getPassword(), employee.getEmail(),
 				employee.getRol());
 	}
 
 	@DeleteMapping("/del")
 	public DeleteResponseDTO deleteEmployee(@RequestBody DeleteRequestDTO dto) {
-
 		employeeService.deleteEmployee(dto.getEmail());
-		System.out.println("Delete.. Calisiyor");
 		return new DeleteResponseDTO("Employee deleted.");
 	}
 
@@ -82,6 +78,6 @@ public class EmployeeController {
 			message = "Error!";
 		}
 		System.out.println("Password.. Calisiyor");
-		return new EditPasswordResponseDTO(dto.getPreviousPassword(), employee.getPassword(), dto.getEmail(), message);
+		return new EditPasswordResponseDTO(dto.getPreviousPassword(), dto.getNewPassword(), dto.getEmail(), message);
 	}
 }
